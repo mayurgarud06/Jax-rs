@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Search Flights</title>
+
+<script>
+   function search(){
+	   let from= document.getElementById("from").value;
+	   let to= document.getElementById("to").value;
+	   
+	   let url="http://localhost:8080/JAX-RS-Intro/api/flight/search?from="+from+"&to="+to;
+	   const oReq = new XMLHttpRequest();
+		oReq.onload = function(e) {
+			 //alert(oReq.response);
+			 var availableFlights = JSON.parse(oReq.response);
+			 //alert(availableFlights);
+			 for(let flight of availableFlights)
+				 //alert(flight.depatureTime);
+			 	document.getElementById("result").innerHTML += "<p>" + flight.depatureTime + "</p>";
+		}
+		oReq.open("GET", url);
+		oReq.send();
+		return false;
+   }
+   
+   
+</script>
+</head>
+
+<body>
+	<form onsubmit="return search()">
+		From :
+		<select id="from">
+		<option value="mumbai">mumbai</option>
+		<option value="Delhi">Delhi</option>
+		<option value="Pune">Pune</option>
+		<option value="Bangalore">Bangalore</option>
+		</select>
+		<br>
+		To :
+		<select id="to">
+		<option value="mumbai">mumbai</option>
+		<option value="Delhi">Delhi</option>
+		<option value="Pune">Pune</option>
+		<option value="Bangalore">Bangalore</option>
+		</select>
+		<br>
+		<button type="submit">Search</button>
+	</form>
+
+ <div id="result"></div>
+</body>
+</html>
