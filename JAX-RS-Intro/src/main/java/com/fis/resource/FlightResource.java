@@ -1,8 +1,10 @@
 package com.fis.resource;
 
+
 import java.util.List;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 import com.fis.entity.Flight;
 import com.fois.dao.InMemoryFlightDao;
@@ -32,6 +34,7 @@ public class FlightResource {
 	// http://localhost:8080/JAX-RS-Intro/api/flight/102
 	@GET
 	@Path("/{flightNo}")
+	//@Produces("application/xml")
 	public Flight getFlight(@PathParam("flightNo") int flightNo) {
 		
 		Flight flight = dao.getFlight(flightNo);
@@ -40,6 +43,7 @@ public class FlightResource {
 	}
 	@GET
 	@Path("/all")
+	
 	public List<Flight> getAll(){
 		
 		return dao.getAllFlights();
@@ -47,6 +51,10 @@ public class FlightResource {
 
 	@POST
 	@Path("/add")
+//	@Consumes("application/json")
+//	@Produces("text/plain")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public String add(Flight flight) {
 		dao.add(flight);
 		return "Flight sucesscully added";
